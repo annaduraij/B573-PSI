@@ -1,3 +1,17 @@
+# Establish Metadata
+metadata = {
+    'Author': 'Jay Annadurai',
+    'Date': '4 Feb 2024',
+    'Project': 'A2-SeqReader',
+    'Version': 1.0,
+    'Description': 'Reads a DNA sequence from a FASTA file and gets counts of Bases per Kilobase'
+}
+
+# Print Metadata
+for key in metadata:
+    print(str(key) + ": " + str(metadata[key]))
+
+
 # 1. Open Chromosomal Sequence with Python
 def read_file_wo(relative_filepath: str, skipped_character: str) -> str:
     # Function: Read File WithOut
@@ -27,15 +41,15 @@ seq_chr1_gl383518v1 = read_file_wo(seq_chr1_gl383518v1_filepath, '>')
 # print(seq_chr1_gl383518v1)
 
 # 1a. Print the 10th letter of this sequence.
-question = "1a) 10th Letter of Sequence Chr1_GL383518v1"
+question = "\n 1a) 10th Letter of Sequence Chr1_GL383518v1"
 # Remember, Arrays are 0-Based so 10th letter is index 9
 answer = seq_chr1_gl383518v1[9]
-print(question+": "+answer)
+print(question+": \n "+answer)
 
 # 1b. Print the 758th letter of this sequence.
-question = "1b) 758th Letter of Sequence Chr1_GL383518v1"
+question = "\n 1b) 758th Letter of Sequence Chr1_GL383518v1"
 answer = seq_chr1_gl383518v1[757]
-print(question+": "+answer)
+print(question+": \n "+answer)
 
 
 # 2a.  Write a Python program to create the reverse complement of the encoded DNA molecule used in Part 1.
@@ -63,16 +77,16 @@ def complementary_sequence(sequence: str, dna=True, reverse=False) -> str:
 reverse_complement_seq_chr1_gl383518v1 = complementary_sequence(seq_chr1_gl383518v1, reverse=True)
 
 # 2a. Print the 79th letter of the reverse complementary sequence.
-question = "2a) 79th Letter of the Reverse Complement of Sequence Chr1_GL383518v1"
+question = "\n 2a) 79th Letter of the Reverse Complement of Sequence Chr1_GL383518v1"
 # Remember, Arrays are 0-Based so 79th letter is index 78
 answer = reverse_complement_seq_chr1_gl383518v1[78]
-print(question+": "+answer)
+print(question+": \n "+answer)
 
 # 2b. Print the 500th to 800th letters of the reverse complementary sequence.
-question = "2b) 500th to 800th Letters of the Reverse Complement of Sequence Chr1_GL383518v1"
+question = "\n 2b) 500th to 800th Letters of the Reverse Complement of Sequence Chr1_GL383518v1"
 # Remember, in Slicing Arrays from string[posA,posB], posA is inclusive and posB is exclusive
 answer = reverse_complement_seq_chr1_gl383518v1[499:800]
-print(question+": "+answer)
+print(question+": \n "+answer)
 
 # 3. Read the Original Sequence
 # 3a. Create a nested dictionary that contains the number of times each letter appears in the downloaded sequence
@@ -126,17 +140,17 @@ def base_reader(sequence: str, dna=True) -> dict:
     if dna:
         bases = {
             'A': 0,
-            'T': 0,
             'C': 0,
             'G': 0,
+            'T': 0,
         }
     # For RNA
     else:
         bases = {
             'A': 0,
-            'U': 0,
             'C': 0,
             'G': 0,
+            'U': 0,
         }
 
     # Iterate through the Bases in the Sequence
@@ -148,7 +162,7 @@ def base_reader(sequence: str, dna=True) -> dict:
     return bases
 
 
-def kilobase_reader(sequence: str) -> dict:
+def kilobase_reader(sequence: str, dna=True) -> dict:
     # Function reads the quantity of bases per each kilobase
 
     # Split the Sequence into Intervals of 1000, i.e. kilobases
@@ -158,33 +172,120 @@ def kilobase_reader(sequence: str) -> dict:
     for kilobase in kilobases:
         # kilobases[kilobase] accesses the sequence with the key of that specific kilobase
         # Overwrite the sequence with the dictionary of base counts under the key of the specific kilobase
-        kilobases[kilobase] = base_reader(kilobases[kilobase])
+        kilobases[kilobase] = base_reader(kilobases[kilobase], dna)
 
     # Return the dictionary of kilobases with each kilobase containing a dictionary of its base count
     return kilobases
 
 
 # Bind the Kilobase Reads
-kilobase_reads_seq_chr1_gl383518v1 = kilobase_reader(seq_chr1_gl383518v1)
+kilobase_reads_seq_chr1_gl383518v1_dict = kilobase_reader(seq_chr1_gl383518v1, dna=True)
 # print(kilobase_reader(seq_chr1_gl383518v1))
 
 # 4. Write a Python program to read the dictionary in Part 3.
 
 # 4a. Create a list with 4 elements with the count of each nucleotide (A,C,G,T) in the first 1000 base pairs
 
-# 4b. Repeat part 4a for each kilobase contained in the dictionary.
 
+def dict_to_list(dictionary: dict) -> list:
+    # Function to Recursively Convert any Dictionaries into Lists
+    temp_list = []
+
+    # Iterate through the Dictionary
+    for key in dictionary:
+        # Get the Value of the Key-Value pair
+        value = dictionary[key]
+
+        # If the value itself is a dictionary, recursively call the same function
+        if type(value) is dict:
+            value = dict_to_list(value)
+
+        # Append the Value to the List
+        temp_list.append(value)
+
+    # Return the Converted List
+    return temp_list
+
+
+# Convert the Kilobase Reads Dictionary into a List and Bind it
+kilobase_reads_seq_chr1_gl383518v1_list = dict_to_list(kilobase_reads_seq_chr1_gl383518v1_dict)
+
+# 4a. Create a list with 4 elements with the count of each nucleotide (A,C,G,T) in the first 1000 base pairs
+question = "\n 4a) Create a list with 4 elements with each nucleotide (A,C,G,T) count in the first 1000 base pairs"
+# The first element, index 0, in the list is the Reads of the 1st Kilobase
+answer = kilobase_reads_seq_chr1_gl383518v1_list[0]
+print(question+": "+str(answer))
+
+# 4b. Repeat part 4a for each kilobase contained in the dictionary.
 # 4c. Create a list containing each individual list from the part 4b.
+question = "\n 4b/c) Create a list containing each individual list for each kilobase contained in the dictionary"
+# The first element, index 0, in the list is the Reads of the 1st Kilobase
+answer = kilobase_reads_seq_chr1_gl383518v1_list
+print(question+": "+str(answer))
 
 # 4d. Calculate the sum of each list.
+
+
+def sum_list(list_to_sum: list) -> int:
+    # Function to iterate through lists and sum any integers or floats
+    temp_sum = 0
+
+    # Iterate through the Elements
+    for element in list_to_sum:
+        # If the element itself is a list, recursively call the sum_list function and rebind it
+        if type(element) is list:
+            element = sum_list(element)
+
+        # Only consider the element if it is a number
+        if type(element) is int or type(element) is float:
+            # Accumulate the element's value into the sum
+            temp_sum += element
+
+    # Return the Sum of all numbers within the list
+    return temp_sum
+
+
+def list_of_sums(list_of_lists_to_sum: list) -> list:
+    # Function to iterate through the lists of lists and sum the internal lists
+    temp_list = []
+
+    # Iterate through the List
+    for list_to_sum in list_of_lists_to_sum:
+        # Only consider the element if it is a list itself
+        if type(list_to_sum) is list:
+            # Accumulate the sum of the list
+            temp_list.append(sum_list(list_to_sum))
+
+    # Return the new List of Sums
+    return temp_list
+
+
+# 4d. Calculate the sum of each list from part 4b
+question = "\n 4d) Calculate the sum of each list from part 4b"
+# The first element, index 0, in the list is the Reads of the 1st Kilobase
+answer = list_of_sums(kilobase_reads_seq_chr1_gl383518v1_list)
+print(question+": "+str(answer))
 
 # 4e. Using comments in your code answer the following questions:
 
 # 4e1. What is the expected sum for each list?
+question = "\n 4e1) What is the expected sum for each list?"
+answer = "\n The expected sum is 1000 as each list contains the count of the bases A, C, G, T."
+answer += "\n If the source sequence for the counts is actually DNA, it will only be comprised of A, C, G, T bases."
+answer += "\n In the sequence (1 kilobase), the individual count of A, C, G, T bases should equal the total bases."
+print(question+": "+str(answer))
 
 # 4e2. Are there any lists whose sums are not equal to the expected value?
+question = "\n 4e2) Are there any lists whose sums are not equal to the expected value?"
+answer = "\n All sums are the length in bases of the read sequences and as such do match the expected value."
+answer += "\n If the source sequence for the counts is actually DNA, it will only be comprised of A, C, G, T bases."
+answer += "\n As such, per 1 kilobase, the count of the individual A, C, G, T bases should equal the total bases."
+print(question+": "+str(answer))
 
 # 4e3. Provide a general explanation for the differences in your expected results and your observed results.
+question = "\n 4e3) Provide a general explanation for the differences in the expected results and the observed results."
+answer = "\n I did not see any inconsistency between the observed and expected results."
+print(question+": "+str(answer))
 
 # End of File
 
