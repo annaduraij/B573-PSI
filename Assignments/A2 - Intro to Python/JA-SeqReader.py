@@ -1,15 +1,15 @@
 # Establish Metadata
 metadata = {
-    'Author': 'Jay Annadurai',
-    'Date': '4 Feb 2024',
-    'Project': 'A2-SeqReader',
-    'Version': 1.0,
-    'Description': 'Reads a DNA sequence from a FASTA file and gets counts of Bases per Kilobase'
+    'Author      ': 'Jay Annadurai',
+    'Date        ': '4 Feb 2024',
+    'Project     ': 'A2-SeqReader',
+    'Version     ': 1.0,
+    'Description ': 'Reads a DNA sequence from a FASTA file and gets counts of Bases per Kilobase and answers questions'
 }
 
 # Print Metadata
-for key in metadata:
-    print(str(key) + ": " + str(metadata[key]))
+for field in metadata:
+    print(str(field) + ": " + str(metadata[field]))
 
 
 # 1. Open Chromosomal Sequence with Python
@@ -214,14 +214,14 @@ kilobase_reads_seq_chr1_gl383518v1_list = dict_to_list(kilobase_reads_seq_chr1_g
 question = "\n 4a) Create a list with 4 elements with each nucleotide (A,C,G,T) count in the first 1000 base pairs"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
 answer = kilobase_reads_seq_chr1_gl383518v1_list[0]
-print(question+": "+str(answer))
+print(question+": \n"+str(answer))
 
 # 4b. Repeat part 4a for each kilobase contained in the dictionary.
 # 4c. Create a list containing each individual list from the part 4b.
 question = "\n 4b/c) Create a list containing each individual list for each kilobase contained in the dictionary"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
 answer = kilobase_reads_seq_chr1_gl383518v1_list
-print(question+": "+str(answer))
+print(question+": \n"+str(answer))
 
 # 4d. Calculate the sum of each list.
 
@@ -264,7 +264,7 @@ def list_of_sums(list_of_lists_to_sum: list) -> list:
 question = "\n 4d) Calculate the sum of each list from part 4b"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
 answer = list_of_sums(kilobase_reads_seq_chr1_gl383518v1_list)
-print(question+": "+str(answer))
+print(question+": \n"+str(answer))
 
 # 4e. Using comments in your code answer the following questions:
 
@@ -289,7 +289,7 @@ print(question+": "+str(answer))
 
 # End of File
 
-# # Unused Function:
+# # Unused Function(s):
 # def division_round_up(dividend: int, divisor: int) -> int:
 #     # int(expression) converts the float to the nearest integer
 #     # (remainder > 0) is a boolean that evaluates to true AKA 1 if true
