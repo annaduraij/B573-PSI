@@ -3,7 +3,7 @@ metadata = {
     'Author      ': 'Jay Annadurai',
     'Date        ': '4 Feb 2024',
     'Project     ': 'A2-SeqReader',
-    'Version     ': 1.0,
+    'Version     ': 1.1,
     'Description ': 'Reads a DNA sequence from a FASTA file and gets counts of Bases per Kilobase and answers questions'
 }
 
@@ -34,21 +34,21 @@ def read_file_wo(relative_filepath: str, skipped_character: str) -> str:
 
 
 # Establish the Path of the Sequence File
-seq_chr1_gl383518v1_filepath = "Data/chr1_GL383518v1_alt.fa"
+seq_filepath = "Data/chr1_GL383518v1_alt.fa"
 
 # Read the Sequence File
-seq_chr1_gl383518v1 = read_file_wo(seq_chr1_gl383518v1_filepath, '>')
-# print(seq_chr1_gl383518v1)
+seq = read_file_wo(seq_filepath, '>')
+# print(seq)
 
 # 1a. Print the 10th letter of this sequence.
 question = "\n 1a) 10th Letter of Sequence Chr1_GL383518v1"
 # Remember, Arrays are 0-Based so 10th letter is index 9
-answer = seq_chr1_gl383518v1[9]
+answer = seq[9]
 print(question+": \n "+answer)
 
 # 1b. Print the 758th letter of this sequence.
 question = "\n 1b) 758th Letter of Sequence Chr1_GL383518v1"
-answer = seq_chr1_gl383518v1[757]
+answer = seq[757]
 print(question+": \n "+answer)
 
 
@@ -74,18 +74,18 @@ def complementary_sequence(sequence: str, dna=True, reverse=False) -> str:
 
 
 # Bind the Reverse Complement of Sequence Chr1_GL383518v1
-reverse_complement_seq_chr1_gl383518v1 = complementary_sequence(seq_chr1_gl383518v1, reverse=True)
+reverse_complement_seq = complementary_sequence(seq, reverse=True)
 
 # 2a. Print the 79th letter of the reverse complementary sequence.
 question = "\n 2a) 79th Letter of the Reverse Complement of Sequence Chr1_GL383518v1"
 # Remember, Arrays are 0-Based so 79th letter is index 78
-answer = reverse_complement_seq_chr1_gl383518v1[78]
+answer = reverse_complement_seq[78]
 print(question+": \n "+answer)
 
 # 2b. Print the 500th to 800th letters of the reverse complementary sequence.
 question = "\n 2b) 500th to 800th Letters of the Reverse Complement of Sequence Chr1_GL383518v1"
 # Remember, in Slicing Arrays from string[posA,posB], posA is inclusive and posB is exclusive
-answer = reverse_complement_seq_chr1_gl383518v1[499:800]
+answer = reverse_complement_seq[499:800]
 print(question+": \n "+answer)
 
 # 3. Read the Original Sequence
@@ -179,8 +179,8 @@ def kilobase_reader(sequence: str, dna=True) -> dict:
 
 
 # Bind the Kilobase Reads
-kilobase_reads_seq_chr1_gl383518v1_dict = kilobase_reader(seq_chr1_gl383518v1, dna=True)
-# print(kilobase_reader(seq_chr1_gl383518v1))
+kilobase_reads_seq_dict = kilobase_reader(seq, dna=True)
+# print(kilobase_reader(seq))
 
 # 4. Write a Python program to read the dictionary in Part 3.
 
@@ -208,19 +208,19 @@ def dict_to_list(dictionary: dict) -> list:
 
 
 # Convert the Kilobase Reads Dictionary into a List and Bind it
-kilobase_reads_seq_chr1_gl383518v1_list = dict_to_list(kilobase_reads_seq_chr1_gl383518v1_dict)
+kilobase_reads_seq_list = dict_to_list(kilobase_reads_seq_dict)
 
 # 4a. Create a list with 4 elements with the count of each nucleotide (A,C,G,T) in the first 1000 base pairs
 question = "\n 4a) Create a list with 4 elements with each nucleotide (A,C,G,T) count in the first 1000 base pairs"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
-answer = kilobase_reads_seq_chr1_gl383518v1_list[0]
+answer = kilobase_reads_seq_list[0]
 print(question+": \n"+str(answer))
 
 # 4b. Repeat part 4a for each kilobase contained in the dictionary.
 # 4c. Create a list containing each individual list from the part 4b.
 question = "\n 4b/c) Create a list containing each individual list for each kilobase contained in the dictionary"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
-answer = kilobase_reads_seq_chr1_gl383518v1_list
+answer = kilobase_reads_seq_list
 print(question+": \n"+str(answer))
 
 # 4d. Calculate the sum of each list.
@@ -263,7 +263,7 @@ def list_of_sums(list_of_lists_to_sum: list) -> list:
 # 4d. Calculate the sum of each list from part 4b
 question = "\n 4d) Calculate the sum of each list from part 4b"
 # The first element, index 0, in the list is the Reads of the 1st Kilobase
-answer = list_of_sums(kilobase_reads_seq_chr1_gl383518v1_list)
+answer = list_of_sums(kilobase_reads_seq_list)
 print(question+": \n"+str(answer))
 
 # 4e. Using comments in your code answer the following questions:
