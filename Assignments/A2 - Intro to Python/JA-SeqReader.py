@@ -284,7 +284,8 @@ print(question+": "+str(answer))
 
 # 4e3. Provide a general explanation for the differences in your expected results and your observed results.
 question = "\n 4e3) Provide a general explanation for the differences in the expected results and the observed results."
-answer = "\n I did not see any inconsistency between the observed and expected results."
+answer = "\n I did not see any inconsistency between the observed and expected results. "
+answer += "\n Note, pre-processing of the input file was performed to remove the FASTA header."
 print(question+": "+str(answer))
 
 # End of File
